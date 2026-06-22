@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PixieCube — Immersive 3D Virtual Tours Malaysia</title>
+  <meta name="description" content="PixieCube brings your space to life with Matterport-powered 3D virtual tours in Malaysia. Serving hotels, event venues, retail, F&B and corporate spaces. Book a scan today." />
+  <meta name="keywords" content="3D virtual tour Malaysia, Matterport Malaysia, virtual tour Kuala Lumpur, hotel virtual tour Malaysia, 360 virtual tour Malaysia, immersive space tour, event venue 3D walkthrough, Matterport scanning service Malaysia, digital twin Malaysia" />
+  <meta property="og:title" content="PixieCube — Immersive 3D Virtual Tours Malaysia" />
+  <meta property="og:description" content="Step inside before you step inside. Matterport-powered 3D virtual tours for hotels, venues, retail and corporate spaces across Malaysia." />
+  <meta property="og:url" content="https://www.pixiecube.space" />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://www.pixiecube.space" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── TOKENS ─────────────────────────────────────────────────── */
+    :root {
+      --navy:      #080C18;
+      --navy-mid:  #111827;
+      --navy-card: #141B2D;
+      --navy-edge: #1C2640;
+      --amber:     #F0A500;
+      --amber-dim: #B87A00;
+      --amber-glow:#F0A50033;
+      --cream:     #EDE8DF;
+      --mist:      #9AA3B5;
+      --white:     #FAFAF8;
+
+      --ff-display: 'Cormorant Garant', Georgia, serif;
+      --ff-mono:    'DM Mono', 'Courier New', monospace;
+      --ff-body:    'Outfit', sans-serif;
+
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* ── RESET ───────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--navy);
+      color: var(--cream);
+      font-family: var(--ff-body);
+      font-weight: 300;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ── NOISE TEXTURE OVERLAY ───────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.4;
+    }
+
+    /* ── NAV ─────────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 900;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 5vw;
+      background: linear-gradient(to bottom, rgba(8,12,24,0.95) 0%, rgba(8,12,24,0) 100%);
+      backdrop-filter: blur(0px);
+      animation: navSlide 0.8s var(--ease-out-expo) both;
+    }
+    @keyframes navSlide {
+      from { opacity: 0; transform: translateY(-16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .logo {
+      display: flex;
+      align-items: baseline;
+      gap: 0.15em;
+      font-family: var(--ff-display);
+      font-size: 1.55rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+    .logo-pixie { color: var(--white); }
+    .logo-cube  { color: var(--amber); }
+    .logo-dot   { color: var(--mist); font-size: 0.9rem; margin-left: -0.05em; }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      font-family: var(--ff-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--mist);
+    }
+    .nav-links a:hover { color: var(--amber); transition: color 0.2s; }
+    .nav-cta {
+      font-family: var(--ff-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: var(--amber);
+      color: var(--navy);
+      padding: 0.55rem 1.25rem;
+      border-radius: 2px;
+      font-weight: 500;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .nav-cta:hover { background: var(--white); transform: translateY(-1px); }
+
+    /* ── HERO ────────────────────────────────────────────────────── */
+    .hero {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 12vh 5vw 8vh;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* geometric grid background */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(240,165,0,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(240,165,0,0.04) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: radial-gradient(ellipse 80% 80% at 60% 40%, black 30%, transparent 100%);
+    }
+
+    /* glowing orb */
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      right: -100px; top: 50%;
+      transform: translateY(-50%);
+      background: radial-gradient(circle, rgba(240,165,0,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--ff-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.9s 0.1s var(--ease-out-expo) both;
+    }
+
+    /* 3D rotating cube accent beside eyebrow */
+    .cube-icon {
+      display: inline-block;
+      width: 10px; height: 10px;
+      background: var(--amber);
+      margin-right: 0.6em;
+      animation: cubeRotate 6s linear infinite;
+      transform-style: preserve-3d;
+      vertical-align: middle;
+    }
+    @keyframes cubeRotate {
+      0%   { transform: rotate(0deg) skew(0deg); }
+      25%  { transform: rotate(90deg) skew(5deg); }
+      50%  { transform: rotate(180deg) skew(0deg); }
+      75%  { transform: rotate(270deg) skew(-5deg); }
+      100% { transform: rotate(360deg) skew(0deg); }
+    }
+
+    .hero-title {
+      font-family: var(--ff-display);
+      font-size: clamp(3.2rem, 8vw, 7.5rem);
+      font-weight: 300;
+      line-height: 1.0;
+      letter-spacing: -0.01em;
+      max-width: 12ch;
+      margin-bottom: 0.15em;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--amber);
+    }
+    .hero-title .line1 { animation: fadeUp 0.9s 0.25s var(--ease-out-expo) both; }
+    .hero-title .line2 { animation: fadeUp 0.9s 0.38s var(--ease-out-expo) both; }
+    .hero-title .line3 { animation: fadeUp 0.9s 0.5s  var(--ease-out-expo) both; }
+
+    .hero-sub {
+      margin-top: 2rem;
+      max-width: 480px;
+      font-size: 1.05rem;
+      color: var(--mist);
+      line-height: 1.75;
+      animation: fadeUp 0.9s 0.65s var(--ease-out-expo) both;
+    }
+
+    .hero-actions {
+      margin-top: 2.5rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      animation: fadeUp 0.9s 0.8s var(--ease-out-expo) both;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5em;
+      background: var(--amber);
+      color: var(--navy);
+      font-family: var(--ff-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 500;
+      padding: 0.85rem 1.8rem;
+      border-radius: 2px;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    }
+    .btn-primary:hover {
+      background: var(--white);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(240,165,0,0.25);
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5em;
+      border: 1px solid rgba(240,165,0,0.35);
+      color: var(--cream);
+      font-family: var(--ff-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.85rem 1.8rem;
+      border-radius: 2px;
+      transition: border-color 0.2s, color 0.2s, transform 0.15s;
+    }
+    .btn-ghost:hover {
+      border-color: var(--amber);
+      color: var(--amber);
+      transform: translateY(-2px);
+    }
+
+    .hero-scroll-hint {
+      position: absolute;
+      bottom: 2.5rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--ff-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--mist);
+      animation: fadeUp 0.9s 1.2s var(--ease-out-expo) both;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, var(--amber), transparent);
+      animation: scrollPulse 2s 1.5s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50%       { opacity: 1;   transform: scaleY(0.6); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── IMAGE PLACEHOLDER BLOCK ─────────────────────────────────── */
+    .hero-visual {
+      position: absolute;
+      right: 5vw;
+      top: 50%;
+      transform: translateY(-50%);
+      width: clamp(280px, 38vw, 560px);
+      aspect-ratio: 4/3;
+      animation: fadeUp 1s 0.6s var(--ease-out-expo) both;
+    }
+    .img-frame {
+      width: 100%;
+      height: 100%;
+      border: 1px solid rgba(240,165,0,0.2);
+      border-radius: 4px;
+      background: var(--navy-card);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      color: var(--mist);
+      position: relative;
+      overflow: hidden;
+    }
+    .img-frame::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(240,165,0,0.05) 0%, transparent 60%);
+    }
+    .img-frame-label {
+      font-family: var(--ff-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(240,165,0,0.5);
+    }
+    .img-frame-icon {
+      font-size: 2.5rem;
+      opacity: 0.3;
+    }
+    /* animated corner brackets */
+    .img-frame::after {
+      content: '';
+      position: absolute;
+      top: 12px; left: 12px;
+      width: 24px; height: 24px;
+      border-top: 2px solid var(--amber);
+      border-left: 2px solid var(--amber);
+      opacity: 0.5;
+    }
+    .img-frame-br {
+      position: absolute;
+      bottom: 12px; right: 12px;
+      width: 24px; height: 24px;
+      border-bottom: 2px solid var(--amber);
+      border-right: 2px solid var(--amber);
+      opacity: 0.5;
+    }
+
+    /* ── SECTION SHARED ──────────────────────────────────────────── */
+    section { position: relative; }
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 7rem 5vw;
+    }
+    .eyebrow {
+      font-family: var(--ff-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8em;
+    }
+    .eyebrow::after {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 1px;
+      background: var(--amber-dim);
+    }
+
+    /* ── WHO WE SERVE ────────────────────────────────────────────── */
+    .serve { background: var(--navy-mid); }
+    .serve-title {
+      font-family: var(--ff-display);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 300;
+      line-height: 1.15;
+      max-width: 22ch;
+      margin-bottom: 3.5rem;
+    }
+    .serve-title strong {
+      font-weight: 600;
+      font-style: italic;
+      color: var(--amber);
+    }
+
+    .serve-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5px;
+    }
+
+    .serve-card {
+      background: var(--navy-card);
+      padding: 2.5rem 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+      cursor: default;
+    }
+    .serve-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(240,165,0,0.06) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .serve-card:hover::before { opacity: 1; }
+    .serve-card:hover { background: var(--navy-edge); }
+
+    /* amber left border on hover */
+    .serve-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 2px; height: 0;
+      background: var(--amber);
+      transition: height 0.4s var(--ease-out-expo);
+    }
+    .serve-card:hover::after { height: 100%; }
+
+    .serve-card-num {
+      font-family: var(--ff-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      color: var(--amber-dim);
+      margin-bottom: 1.5rem;
+    }
+    .serve-card-icon {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .serve-card-title {
+      font-family: var(--ff-display);
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+    .serve-card-line {
+      font-size: 0.88rem;
+      color: var(--mist);
+      line-height: 1.55;
+    }
+
+    /* ── IMAGE SHOWCASE STRIP ────────────────────────────────────── */
+    .showcase {
+      background: var(--navy);
+      overflow: hidden;
+    }
+    .showcase .section-inner { padding-bottom: 4rem; }
+    .showcase-title {
+      font-family: var(--ff-display);
+      font-size: clamp(1.8rem, 3.5vw, 3rem);
+      font-weight: 300;
+      max-width: 28ch;
+      margin-bottom: 3rem;
+    }
+    .showcase-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 1.5px;
+    }
+    .showcase-cell {
+      background: var(--navy-card);
+      position: relative;
+      overflow: hidden;
+    }
+    .showcase-cell:first-child {
+      grid-row: span 2;
+      min-height: 500px;
+    }
+    .showcase-cell:not(:first-child) {
+      min-height: 245px;
+    }
+    .showcase-img-placeholder {
+      width: 100%; height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      color: var(--mist);
+      position: relative;
+    }
+    .showcase-img-placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(240,165,0,0.04) 0%, transparent 70%);
+    }
+    .sip-icon { font-size: 2rem; opacity: 0.25; }
+    .sip-label {
+      font-family: var(--ff-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(240,165,0,0.4);
+    }
+    .sip-badge {
+      position: absolute;
+      bottom: 1rem; left: 1rem;
+      background: rgba(8,12,24,0.85);
+      border: 1px solid rgba(240,165,0,0.2);
+      padding: 0.3rem 0.7rem;
+      font-family: var(--ff-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--amber);
+      border-radius: 2px;
+    }
+
+    /* ── PROCESS ─────────────────────────────────────────────────── */
+    .process { background: var(--navy-mid); }
+    .process-title {
+      font-family: var(--ff-display);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 300;
+      margin-bottom: 4rem;
+    }
+
+    .process-track {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+
+    /* connecting line */
+    .process-track::before {
+      content: '';
+      position: absolute;
+      top: 36px; left: 36px;
+      right: 36px;
+      height: 1px;
+      background: linear-gradient(to right, var(--amber), rgba(240,165,0,0.15));
+    }
+
+    .process-step {
+      padding: 0 1.5rem 0 0;
+      position: relative;
+    }
+
+    .step-dot {
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--amber);
+      border: 3px solid var(--navy-mid);
+      box-shadow: 0 0 0 1px var(--amber);
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 2;
+    }
+    .step-dot::after {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      background: var(--amber-glow);
+      animation: dotPulse 3s ease-in-out infinite;
+    }
+    @keyframes dotPulse {
+      0%, 100% { transform: scale(1); opacity: 0.6; }
+      50%       { transform: scale(1.5); opacity: 0; }
+    }
+
+    /* stagger the pulse */
+    .process-step:nth-child(2) .step-dot::after { animation-delay: 0.75s; }
+    .process-step:nth-child(3) .step-dot::after { animation-delay: 1.5s; }
+    .process-step:nth-child(4) .step-dot::after { animation-delay: 2.25s; }
+
+    .step-phase {
+      font-family: var(--ff-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 0.5rem;
+    }
+    .step-name {
+      font-family: var(--ff-display);
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.75rem;
+    }
+    .step-desc {
+      font-size: 0.88rem;
+      color: var(--mist);
+      line-height: 1.65;
+    }
+    .step-img {
+      margin-top: 1.25rem;
+      aspect-ratio: 4/3;
+      background: var(--navy-card);
+      border: 1px solid rgba(240,165,0,0.1);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 0.5rem;
+      color: rgba(240,165,0,0.3);
+      font-family: var(--ff-mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ── WHY MATTERPORT ──────────────────────────────────────────── */
+    .why {
+      background: var(--navy);
+      border-top: 1px solid rgba(240,165,0,0.08);
+    }
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .why-copy {}
+    .why-title {
+      font-family: var(--ff-display);
+      font-size: clamp(1.8rem, 3.5vw, 3rem);
+      font-weight: 300;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+    .why-body {
+      color: var(--mist);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+    .why-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .stat-card {
+      border-left: 2px solid var(--amber);
+      padding-left: 1rem;
+    }
+    .stat-num {
+      font-family: var(--ff-display);
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: var(--amber);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--mist);
+      margin-top: 0.2rem;
+    }
+
+    .why-visual {
+      aspect-ratio: 4/3;
+      background: var(--navy-card);
+      border: 1px solid rgba(240,165,0,0.15);
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      color: var(--mist);
+      position: relative;
+      overflow: hidden;
+    }
+    .why-visual::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom right, rgba(240,165,0,0.05), transparent);
+    }
+    .why-frame-tl, .why-frame-br {
+      position: absolute;
+      width: 28px; height: 28px;
+    }
+    .why-frame-tl {
+      top: 12px; left: 12px;
+      border-top: 2px solid rgba(240,165,0,0.4);
+      border-left: 2px solid rgba(240,165,0,0.4);
+    }
+    .why-frame-br {
+      bottom: 12px; right: 12px;
+      border-bottom: 2px solid rgba(240,165,0,0.4);
+      border-right: 2px solid rgba(240,165,0,0.4);
+    }
+
+    /* ── CTA BAND ────────────────────────────────────────────────── */
+    .cta-band {
+      background: linear-gradient(135deg, #0D1220 0%, #111827 50%, #0A0E1A 100%);
+      border-top: 1px solid rgba(240,165,0,0.15);
+      border-bottom: 1px solid rgba(240,165,0,0.15);
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-band::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 800px; height: 400px;
+      background: radial-gradient(ellipse, rgba(240,165,0,0.07) 0%, transparent 70%);
+    }
+    .cta-band .section-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 7rem 5vw;
+    }
+    .cta-eyebrow {
+      font-family: var(--ff-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 1.5rem;
+    }
+    .cta-title {
+      font-family: var(--ff-display);
+      font-size: clamp(2.5rem, 6vw, 5.5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      max-width: 18ch;
+      margin-bottom: 1rem;
+    }
+    .cta-title em {
+      font-style: italic;
+      color: var(--amber);
+    }
+    .cta-sub {
+      color: var(--mist);
+      font-size: 1rem;
+      margin-bottom: 3rem;
+      max-width: 44ch;
+    }
+    .cta-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 2.5rem;
+    }
+    .btn-wa {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6em;
+      background: #25D366;
+      color: #fff;
+      font-family: var(--ff-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 500;
+      padding: 0.9rem 1.8rem;
+      border-radius: 2px;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    }
+    .btn-wa:hover {
+      background: #1ebe5b;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(37,211,102,0.25);
+    }
+    .btn-wa-secondary {
+      background: rgba(37,211,102,0.12);
+      color: #25D366;
+      border: 1px solid rgba(37,211,102,0.3);
+    }
+    .btn-wa-secondary:hover {
+      background: rgba(37,211,102,0.2);
+      box-shadow: 0 8px 24px rgba(37,211,102,0.12);
+    }
+    .wa-icon {
+      width: 16px; height: 16px;
+      flex-shrink: 0;
+    }
+
+    .cta-alt {
+      font-family: var(--ff-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--mist);
+    }
+    .cta-alt a { color: var(--amber); transition: color 0.2s; }
+    .cta-alt a:hover { color: var(--white); }
+
+    /* ── FOOTER ──────────────────────────────────────────────────── */
+    footer {
+      background: var(--navy);
+      padding: 3rem 5vw;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .footer-logo {
+      font-family: var(--ff-display);
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+    .footer-logo span { color: var(--amber); }
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+      font-family: var(--ff-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mist);
+    }
+    .footer-links a:hover { color: var(--amber); transition: color 0.2s; }
+    .footer-legal {
+      font-family: var(--ff-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      color: rgba(154,163,181,0.45);
+      text-align: right;
+    }
+
+    /* ── MOBILE ──────────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .hero-visual { display: none; }
+      .nav-links   { display: none; }
+      .process-track {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+      }
+      .process-track::before { display: none; }
+      .why-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .why-visual { display: none; }
+      .showcase-grid {
+        grid-template-columns: 1fr;
+      }
+      .showcase-cell:first-child { min-height: 280px; grid-row: span 1; }
+      .showcase-cell:not(:first-child) { min-height: 200px; }
+    }
+
+    @media (max-width: 600px) {
+      .process-track { grid-template-columns: 1fr; }
+      .cta-title { font-size: 2.4rem; }
+      .hero-title { font-size: 3rem; }
+      .nav-cta { display: none; }
+      .footer-legal { text-align: left; }
+    }
+
+    /* ── REDUCED MOTION ──────────────────────────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav aria-label="Main navigation">
+    <div class="logo">
+      <span class="logo-pixie">Pixie</span><span class="logo-cube">Cube</span><span class="logo-dot">.space</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#serve">Services</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#why">Why Us</a></li>
+    </ul>
+    <a href="https://wa.me/60145845034" target="_blank" rel="noopener" class="nav-cta">Get a Quote</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" aria-label="Hero">
+    <p class="hero-eyebrow"><span class="cube-icon" aria-hidden="true"></span>Matterport-Powered · Malaysia</p>
+    <h1 class="hero-title">
+      <span class="line1">Step inside</span>
+      <span class="line2">before you</span>
+      <span class="line3"><em>step inside.</em></span>
+    </h1>
+    <p class="hero-sub">
+      PixieCube transforms physical spaces into immersive 3D virtual experiences — so your guests, clients and customers can explore before they ever arrive.
+    </p>
+    <div class="hero-actions">
+      <a href="https://wa.me/60145845034" target="_blank" rel="noopener" class="btn-primary">
+        <svg class="wa-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp Us
+      </a>
+      <a href="#process" class="btn-ghost">See How It Works →</a>
+    </div>
+
+    <!-- Image placeholder — replace src with actual visual -->
+    <div class="hero-visual" aria-label="3D tour preview">
+      <div class="img-frame">
+        <span class="img-frame-icon" aria-hidden="true">⬡</span>
+        <span class="img-frame-label">Your space · here</span>
+        <div class="img-frame-br" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <div class="hero-scroll-hint" aria-hidden="true">
+      <div class="scroll-line"></div>
+      <span>scroll</span>
+    </div>
+  </section>
+
+  <!-- WHO WE SERVE -->
+  <section class="serve" id="serve" aria-labelledby="serve-heading">
+    <div class="section-inner">
+      <p class="eyebrow">Who we serve</p>
+      <h2 class="serve-title" id="serve-heading">Built for spaces that <strong>deserve to be explored.</strong></h2>
+      <div class="serve-grid" role="list">
+
+        <article class="serve-card" role="listitem">
+          <div class="serve-card-num">01</div>
+          <span class="serve-card-icon" aria-hidden="true">🏨</span>
+          <div class="serve-card-title">Hotels &amp; Resorts</div>
+          <p class="serve-card-line">Let guests tour your rooms, lobbies and amenities before they book — and convert sales before site visits</p>
+        </article>
+
+        <article class="serve-card" role="listitem">
+          <div class="serve-card-num">02</div>
+          <span class="serve-card-icon" aria-hidden="true">🎪</span>
+          <div class="serve-card-title">Event Venues</div>
+          <p class="serve-card-line">Give planners a photorealistic walkthrough so they can visualise seating, flow and setups , enhancing audience POV  — without a site visit.</p>
+        </article>
+
+        <article class="serve-card" role="listitem">
+          <div class="serve-card-num">03</div>
+          <span class="serve-card-icon" aria-hidden="true">🛍</span>
+          <div class="serve-card-title">Retail &amp; F&amp;B</div>
+          <p class="serve-card-line">Bring foot traffic online — show your atmosphere, layout and brand story to customers before they walk through the door.</p>
+        </article>
+
+        <article class="serve-card" role="listitem">
+          <div class="serve-card-num">04</div>
+          <span class="serve-card-icon" aria-hidden="true">🏢</span>
+          <div class="serve-card-title">Corporate Spaces</div>
+          <p class="serve-card-line">Digitise your office, showroom or facility for virtual onboarding, remote tours on convenience and always-on presentations.</p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SHOWCASE IMAGE GRID -->
+  <section class="showcase" aria-label="Portfolio preview">
+    <div class="section-inner">
+      <p class="eyebrow">Our work</p>
+      <h2 class="showcase-title">Real spaces. <em>Virtually</em> everywhere.</h2>
+    </div>
+    <div class="showcase-grid" style="max-width:1200px; margin: 0 auto 7rem; padding: 0 5vw;">
+
+      <!-- Replace each .showcase-img-placeholder with an <img> tag when ready -->
+      <div class="showcase-cell">
+        <div class="showcase-img-placeholder">
+          <span class="sip-icon" aria-hidden="true">⬡</span>
+          <span class="sip-label">Featured space</span>
+          <span class="sip-badge">Hotel &amp; Resort</span>
+        </div>
+      </div>
+
+      <div class="showcase-cell">
+        <div class="showcase-img-placeholder">
+          <span class="sip-icon" aria-hidden="true">⬡</span>
+          <span class="sip-label">Coming soon</span>
+          <span class="sip-badge">Event Venue</span>
+        </div>
+      </div>
+
+      <div class="showcase-cell">
+        <div class="showcase-img-placeholder">
+          <span class="sip-icon" aria-hidden="true">⬡</span>
+          <span class="sip-label">Coming soon</span>
+          <span class="sip-badge">Retail &amp; F&amp;B</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="process" id="process" aria-labelledby="process-heading">
+    <div class="section-inner">
+      <p class="eyebrow">How it works</p>
+      <h2 class="process-title" id="process-heading">From a single scan — to a world your clients can walk through.</h2>
+
+      <div class="process-track">
+
+        <div class="process-step">
+          <div class="step-dot" aria-hidden="true"></div>
+          <div class="step-phase">Phase 01</div>
+          <div class="step-name">Consult</div>
+          <p class="step-desc">We discuss your space, goals and audience. No jargon — just a quick WhatsApp or call to understand what you need.</p>
+          <div class="step-img" aria-label="Consultation illustration placeholder">
+            <span style="font-size:1.4rem; opacity:0.3;" aria-hidden="true">💬</span>
+            <span>image here</span>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <div class="step-dot" aria-hidden="true"></div>
+          <div class="step-phase">Phase 02</div>
+          <div class="step-name">Scan</div>
+          <p class="step-desc">Our team arrives with Matterport equipment. The scan is fast, non-intrusive — most spaces done in hours.</p>
+          <div class="step-img" aria-label="Scanning illustration placeholder">
+            <span style="font-size:1.4rem; opacity:0.3;" aria-hidden="true">📡</span>
+            <span>image here</span>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <div class="step-dot" aria-hidden="true"></div>
+          <div class="step-phase">Phase 03</div>
+          <div class="step-name">Process</div>
+          <p class="step-desc">Raw scans are processed into a fully navigable 3D model — including floorplans, measurements and highlights.</p>
+          <div class="step-img" aria-label="Processing illustration placeholder">
+            <span style="font-size:1.4rem; opacity:0.3;" aria-hidden="true">⚙️</span>
+            <span>image here</span>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <div class="step-dot" aria-hidden="true"></div>
+          <div class="step-phase">Phase 04</div>
+          <div class="step-name">Deliver</div>
+          <p class="step-desc">You receive a shareable link embeddable on any website, Google Maps, or social — live within days.</p>
+          <div class="step-img" aria-label="Delivery illustration placeholder">
+            <span style="font-size:1.4rem; opacity:0.3;" aria-hidden="true">🚀</span>
+            <span>image here</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section class="why" id="why" aria-labelledby="why-heading">
+    <div class="section-inner">
+      <div class="why-grid">
+        <div class="why-copy">
+          <p class="eyebrow">Why PixieCube</p>
+          <h2 class="why-title" id="why-heading">Malaysia's spaces deserve world-class digital presence.</h2>
+          <p class="why-body">
+            Powered by Matterport — the global leader in 3D capture — PixieCube brings enterprise-grade virtual tours to Malaysian businesses of every size. We handle everything: scanning, processing, hosting and delivery. You just share the link.
+          </p>
+          <div class="why-stats">
+            <div class="stat-card">
+              <div class="stat-num">4K+</div>
+              <div class="stat-label">Resolution capture</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-num">360°</div>
+              <div class="stat-label">Full immersive view</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-num">48h</div>
+              <div class="stat-label">Average turnaround</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-num">∞</div>
+              <div class="stat-label">Views, no extra cost</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="why-visual" aria-label="Matterport tour visual placeholder">
+          <div class="why-frame-tl" aria-hidden="true"></div>
+          <span style="font-size:3rem; opacity:0.2;" aria-hidden="true">⬡</span>
+          <span style="font-family:var(--ff-mono); font-size:0.6rem; letter-spacing:0.12em; text-transform:uppercase; color:rgba(240,165,0,0.35);">Tour preview · image here</span>
+          <div class="why-frame-br" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BAND -->
+  <section class="cta-band" aria-labelledby="cta-heading">
+    <div class="section-inner">
+      <p class="cta-eyebrow">Ready when you are</p>
+      <h2 class="cta-title" id="cta-heading">Ready to bring your space <em>to life?</em></h2>
+      <p class="cta-sub">Drop us a WhatsApp — we'll get back to you fast. No forms, no waiting, no nonsense. Just a conversation about your space.</p>
+
+      <div class="cta-actions">
+        <a href="https://wa.me/60145845034" target="_blank" rel="noopener" class="btn-wa" aria-label="WhatsApp Danial">
+          <svg class="wa-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp Danial
+        </a>
+        <a href="https://wa.me/60122697923" target="_blank" rel="noopener" class="btn-wa btn-wa-secondary" aria-label="WhatsApp Mukhris">
+          <svg class="wa-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp Mukhris
+        </a>
+      </div>
+
+      <p class="cta-alt">
+        Or find us on Instagram
+        <a href="https://instagram.com/pixiecube.space" target="_blank" rel="noopener"> @pixiecube.space</a>
+        &nbsp;·&nbsp;
+        <a href="mailto:hello@pixiecube.space">hello@pixiecube.space</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- OFFICE MAP -->
+  <section style="padding: 4rem 5vw; background: var(--navy-mid); border-top: 1px solid var(--navy-edge);">
+    <div style="max-width: 960px; margin: 0 auto;">
+      <p style="font-family: var(--ff-mono); font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber); margin-bottom: 1rem;">Our Office</p>
+      <p style="font-family: var(--ff-display); font-size: 1.5rem; color: var(--cream); margin-bottom: 2rem;">Plaza KLTS, Kuala Lumpur</p>
+      <div style="position: relative; width: 100%; border: 1px solid var(--navy-edge); border-radius: 4px; overflow: hidden; box-shadow: 0 0 40px rgba(240,165,0,0.06);">
+        <div style="position: absolute; inset: 0; pointer-events: none; z-index: 1; border: 1px solid rgba(240,165,0,0.15); border-radius: 4px;"></div>
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3983.583481849189!2d101.7034491!3d3.2035407!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc47f6f6ded98d%3A0xa28223dd39c37492!2sPlaza%20KLTS%2C%2053000%20Kuala%20Lumpur%2C%20Federal%20Territory%20of%20Kuala%20Lumpur!5e0!3m2!1sen!2smy!4v1782145829417!5m2!1sen!2smy"
+          width="100%"
+          height="420"
+          style="border:0; display:block; filter: grayscale(0.3) contrast(1.05);"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="PixieCube Office — Plaza KLTS, Kuala Lumpur">
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">Pixie<span>Cube</span>.space</div>
+      <ul class="footer-links">
+        <li><a href="#serve">Services</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="https://instagram.com/pixiecube.space" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a href="https://wa.me/60145845034" target="_blank" rel="noopener">WhatsApp</a></li>
+      </ul>
+      <div class="footer-legal">
+        © 2025 PixieCube. Malaysia.<br>
+        Powered by Matterport.
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
