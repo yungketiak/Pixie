@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /v1.html
-
-Sitemap: https://pixiecube.space/sitemap.xml
