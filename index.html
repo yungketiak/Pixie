@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3D Virtual Tour Malaysia — Matterport Scanning for Hotels & Venues | PIXIE³</title>
+  <meta name="description" content="PIXIE³ creates Matterport-powered 3D virtual tours in Malaysia — 360° walkthroughs for hotels, event venues, retail, F&B and corporate spaces in KL and nationwide. Get a fixed quote via WhatsApp." />
+  <meta name="keywords" content="3D virtual tour Malaysia, Matterport Malaysia, virtual tour Kuala Lumpur, hotel virtual tour Malaysia, 360 virtual tour Malaysia, digital twin Malaysia" />
+  <meta property="og:title" content="3D Virtual Tour Malaysia — Matterport Scanning | PIXIE³" />
+  <meta property="og:description" content="Step inside before you step inside. Matterport-powered 3D virtual tours for hotels, venues, retail and corporate spaces across Malaysia." />
+  <meta property="og:url" content="https://pixiecube.space/" />
+  <meta property="og:image" content="https://pixiecube.space/assets/room-scan.jpg" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://pixiecube.space/" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23212431'/%3E%3Crect x='22' y='22' width='56' height='56' fill='%23EA5C1F'/%3E%3C/svg%3E" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": "https://pixiecube.space/#business",
+    "name": "PIXIE³",
+    "alternateName": "Pixie Cube",
+    "description": "Matterport-powered 3D virtual tour production for hotels, event venues, retail, F&B and corporate spaces across Malaysia.",
+    "url": "https://pixiecube.space/",
+    "email": "hello@pixiecube.space",
+    "telephone": "+60145845034",
+    "image": "https://pixiecube.space/assets/room-scan.jpg",
+    "priceRange": "$$",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Plaza KLTS",
+      "addressLocality": "Kuala Lumpur",
+      "postalCode": "53000",
+      "addressCountry": "MY"
+    },
+    "geo": { "@type": "GeoCoordinates", "latitude": 3.2035407, "longitude": 101.7034491 },
+    "areaServed": { "@type": "Country", "name": "Malaysia" },
+    "sameAs": ["https://instagram.com/pixiecube.space"],
+    "knowsAbout": ["Matterport 3D scanning", "virtual tours", "digital twins", "360 photography"],
+    "makesOffer": [
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Hotel & Resort Virtual Tours", "url": "https://pixiecube.space/hotel-virtual-tour.html" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Event Venue Virtual Tours", "url": "https://pixiecube.space/event-venue-virtual-tour.html" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Retail & F&B Virtual Tours", "url": "https://pixiecube.space/retail-virtual-tour.html" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Office & Corporate Virtual Tours", "url": "https://pixiecube.space/office-virtual-tour.html" } }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet" />
+  <script>(function(){try{var t=localStorage.getItem('pixie-theme');if(!t){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    /* ── page-specific: landing hero ── */
+    .hero {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 12vh 5vw 8vh;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(234,92,31,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(234,92,31,0.04) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: radial-gradient(ellipse 80% 80% at 60% 40%, black 30%, transparent 100%);
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      right: -100px; top: 50%;
+      transform: translateY(-50%);
+      background: radial-gradient(circle, rgba(234,92,31,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-family: var(--ff-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.9s 0.1s var(--ease-out-expo) both;
+    }
+    .cube-icon {
+      display: inline-block;
+      width: 10px; height: 10px;
+      background: var(--amber);
+      margin-right: 0.6em;
+      animation: cubeRotate 6s linear infinite;
+      vertical-align: middle;
+    }
+    @keyframes cubeRotate {
+      0%   { transform: rotate(0deg) skew(0deg); }
+      25%  { transform: rotate(90deg) skew(5deg); }
+      50%  { transform: rotate(180deg) skew(0deg); }
+      75%  { transform: rotate(270deg) skew(-5deg); }
+      100% { transform: rotate(360deg) skew(0deg); }
+    }
+    .hero-title {
+      font-family: var(--ff-display);
+      font-size: clamp(3.2rem, 8vw, 7.5rem);
+      font-weight: 300;
+      line-height: 1.0;
+      letter-spacing: -0.01em;
+      max-width: 12ch;
+      margin-bottom: 0.15em;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-title em { font-style: italic; color: var(--amber); }
+    .hero-title span { display: block; }
+    .hero-title .line1 { animation: fadeUp 0.9s 0.25s var(--ease-out-expo) both; }
+    .hero-title .line2 { animation: fadeUp 0.9s 0.38s var(--ease-out-expo) both; }
+    .hero-title .line3 { animation: fadeUp 0.9s 0.5s  var(--ease-out-expo) both; }
+    .hero-sub {
+      margin-top: 2rem;
+      max-width: 480px;
+      font-size: 1.05rem;
+      color: var(--mist);
+      line-height: 1.75;
+      animation: fadeUp 0.9s 0.65s var(--ease-out-expo) both;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-actions {
+      margin-top: 2.5rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      animation: fadeUp 0.9s 0.8s var(--ease-out-expo) both;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-visual {
+      position: absolute;
+      right: 5vw;
+      top: 50%;
+      transform: translateY(-50%);
+      width: clamp(280px, 38vw, 560px);
+      aspect-ratio: 4/3;
+      animation: fadeUp 1s 0.6s var(--ease-out-expo) both;
+    }
+    .hero-scroll-hint {
+      position: absolute;
+      bottom: 2.5rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--ff-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--mist);
+      animation: fadeUp 0.9s 1.2s var(--ease-out-expo) both;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, var(--amber), transparent);
+      animation: scrollPulse 2s 1.5s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50%       { opacity: 1;   transform: scaleY(0.6); }
+    }
+
+    /* teaser strip */
+    .teaser { background: var(--navy-mid); }
+    .teaser-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .teaser-copy .display-title { font-size: clamp(1.8rem, 3.5vw, 3rem); margin-bottom: 1.4rem; }
+    .teaser-copy p { color: var(--mist); font-size: 0.95rem; line-height: 1.8; margin-bottom: 2rem; }
+    .teaser-visual { aspect-ratio: 16/10; }
+
+    .serve { background: var(--navy); }
+    .serve-title {
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      max-width: 22ch;
+      margin-bottom: 3.5rem;
+    }
+    a.card { color: inherit; text-decoration: none; display: block; }
+    .card-more {
+      display: inline-block;
+      margin-top: 1rem;
+      font-family: var(--ff-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--amber);
+    }
+
+    @media (max-width: 900px) {
+      .hero-visual { display: none; }
+      .teaser-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    }
+    @media (max-width: 600px) {
+      .hero-title { font-size: 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav aria-label="Main navigation">
+    <a href="index.html" class="logo">PIXIE<sup>3</sup></a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu">Menu</button>
+    <ul class="nav-links" id="nav-menu">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="works.html">Our Works</a></li>
+      <li><a href="process.html">Process</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="theme-toggle" aria-label="Switch theme">☾</button>
+    <a href="contact.html" class="nav-cta">Get a Quote</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" aria-label="Hero">
+    <p class="hero-eyebrow"><span class="cube-icon" aria-hidden="true"></span>Matterport-Powered · Malaysia</p>
+    <h1 class="hero-title">
+      <span class="line1">Step inside</span>
+      <span class="line2">before you</span>
+      <span class="line3"><em>step inside.</em></span>
+    </h1>
+    <p class="hero-sub">
+      PIXIE³ creates Matterport-powered <strong>3D virtual tours in Malaysia</strong> — immersive 360° walkthroughs for hotels, event venues, retail and corporate spaces, so your guests and clients can explore before they ever arrive.
+    </p>
+    <div class="hero-actions">
+      <a href="works.html" class="btn-primary">Explore a Live Tour →</a>
+      <a href="process.html" class="btn-ghost">See How It Works</a>
+    </div>
+
+    <div class="hero-visual">
+      <div class="frame">
+        <span class="corner tl" aria-hidden="true"></span>
+        <img src="assets/room-scan.jpg" alt="Matterport 3D virtual tour scan of a hotel room in Kuala Lumpur, Malaysia with skyline view" loading="eager" />
+        <span class="corner br" aria-hidden="true"></span>
+        <span class="badge">Live scan · KL</span>
+      </div>
+    </div>
+
+    <div class="hero-scroll-hint" aria-hidden="true">
+      <div class="scroll-line"></div>
+      <span>scroll</span>
+    </div>
+  </section>
+
+  <!-- DOLLHOUSE TEASER -->
+  <section class="teaser" aria-labelledby="teaser-heading">
+    <div class="section-inner">
+      <div class="teaser-grid">
+        <div class="teaser-copy reveal">
+          <p class="eyebrow">The dollhouse view</p>
+          <h2 class="display-title" id="teaser-heading">Your entire space. <em>One glance.</em></h2>
+          <p>
+            Every PIXIE³ tour includes Matterport's signature dollhouse view — a complete 3D model (digital twin) of your property that visitors can spin, explore and walk through room by room. It's the moment that makes people say <em>wow</em>.
+          </p>
+          <a href="works.html" class="btn-ghost">See It In Action →</a>
+        </div>
+        <div class="frame teaser-visual reveal">
+          <span class="corner tl" aria-hidden="true"></span>
+          <img src="assets/dollhouse.jpg" alt="Matterport dollhouse view — 3D digital twin of a scanned hotel suite in Malaysia" loading="lazy" />
+          <span class="corner br" aria-hidden="true"></span>
+          <span class="badge">Dollhouse view</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHO WE SERVE -->
+  <section class="serve" id="serve" aria-labelledby="serve-heading">
+    <div class="section-inner">
+      <p class="eyebrow reveal">Who we serve</p>
+      <h2 class="display-title serve-title reveal" id="serve-heading">Built for spaces that <strong>deserve to be explored.</strong></h2>
+      <div class="card-grid" role="list">
+
+        <a class="card reveal" role="listitem" href="hotel-virtual-tour.html">
+          <div class="card-num">01</div>
+          <span class="card-icon" aria-hidden="true">🏨</span>
+          <div class="card-title">Hotels &amp; Resorts</div>
+          <p class="card-line">Let guests tour your rooms, lobbies and amenities before they book — and convert sales before site visits.</p>
+          <span class="card-more">Hotel virtual tours →</span>
+        </a>
+
+        <a class="card reveal" role="listitem" href="event-venue-virtual-tour.html">
+          <div class="card-num">02</div>
+          <span class="card-icon" aria-hidden="true">🎪</span>
+          <div class="card-title">Event Venues</div>
+          <p class="card-line">Give planners a photorealistic walkthrough so they can visualise seating, flow and setups — without a site visit.</p>
+          <span class="card-more">Venue virtual tours →</span>
+        </a>
+
+        <a class="card reveal" role="listitem" href="retail-virtual-tour.html">
+          <div class="card-num">03</div>
+          <span class="card-icon" aria-hidden="true">🛍</span>
+          <div class="card-title">Retail &amp; F&amp;B</div>
+          <p class="card-line">Bring foot traffic online — show your atmosphere, layout and brand story to customers before they walk through the door.</p>
+          <span class="card-more">Retail virtual tours →</span>
+        </a>
+
+        <a class="card reveal" role="listitem" href="office-virtual-tour.html">
+          <div class="card-num">04</div>
+          <span class="card-icon" aria-hidden="true">🏢</span>
+          <div class="card-title">Corporate Spaces</div>
+          <p class="card-line">Digitise your office, showroom or facility for virtual onboarding, remote tours and always-on presentations.</p>
+          <span class="card-more">Office virtual tours →</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BAND -->
+  <section class="cta-band" aria-labelledby="cta-heading">
+    <div class="section-inner">
+      <p class="eyebrow" style="justify-content:center;">Ready when you are</p>
+      <h2 class="cta-title" id="cta-heading">Ready to bring your space <em>to life?</em></h2>
+      <p class="cta-sub">Drop us a WhatsApp — we'll get back to you fast. No forms, no waiting, no nonsense. Just a conversation about your space.</p>
+      <div class="cta-actions">
+        <a href="contact.html" class="btn-primary">Contact Us →</a>
+        <a href="works.html" class="btn-ghost">View Our Works</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">PIXIE<sup>3</sup></div>
+      <ul class="footer-links">
+        <li><a href="works.html">Our Works</a></li>
+        <li><a href="process.html">Process</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="hotel-virtual-tour.html">Hotel Tours</a></li>
+        <li><a href="event-venue-virtual-tour.html">Venue Tours</a></li>
+        <li><a href="retail-virtual-tour.html">Retail Tours</a></li>
+        <li><a href="office-virtual-tour.html">Office Tours</a></li>
+        <li><a href="https://instagram.com/pixiecube.space" target="_blank" rel="noopener">Instagram</a></li>
+      </ul>
+      <div class="footer-legal">
+        © 2026 PIXIE³. Malaysia.<br>
+        Powered by Matterport.
+      </div>
+    </div>
+  </footer>
+
+  <script src="site.js"></script>
+</body>
+</html>

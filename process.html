@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How Matterport 3D Scanning Works — Our Process | PIXIE³ Malaysia</title>
+  <meta name="description" content="How PIXIE³ captures your space in Malaysia: consultation, Matterport scanning, processing and delivery in as fast as 48 hours — plus a full pre-scan preparation checklist." />
+  <meta property="og:title" content="Our Process — PIXIE³ 3D Virtual Tours" />
+  <meta property="og:description" content="From a single scan to a world your clients can walk through. See exactly how a PIXIE³ project runs." />
+  <meta property="og:url" content="https://pixiecube.space/process.html" />
+  <meta property="og:image" content="https://pixiecube.space/assets/room-scan.jpg" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://pixiecube.space/process.html" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23212431'/%3E%3Crect x='22' y='22' width='56' height='56' fill='%23EA5C1F'/%3E%3C/svg%3E" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "LocalBusiness",
+        "@id": "https://pixiecube.space/#business",
+        "name": "PIXIE³",
+        "url": "https://pixiecube.space/",
+        "email": "hello@pixiecube.space",
+        "telephone": "+60145845034",
+        "image": "https://pixiecube.space/assets/room-scan.jpg",
+        "address": { "@type": "PostalAddress", "streetAddress": "Plaza KLTS", "addressLocality": "Kuala Lumpur", "postalCode": "53000", "addressCountry": "MY" },
+        "geo": { "@type": "GeoCoordinates", "latitude": 3.2035407, "longitude": 101.7034491 },
+        "areaServed": { "@type": "Country", "name": "Malaysia" },
+        "sameAs": ["https://instagram.com/pixiecube.space"]
+      },
+      {
+        "@type": "HowTo",
+        "name": "How a PIXIE³ 3D virtual tour project works",
+        "description": "The four phases of a Matterport 3D virtual tour project with PIXIE³ in Malaysia.",
+        "step": [
+          { "@type": "HowToStep", "position": 1, "name": "Consult", "text": "Discuss your space, goals and audience over WhatsApp or a call, and receive a fixed quote." },
+          { "@type": "HowToStep", "position": 2, "name": "Scan", "text": "The PIXIE³ team captures your space with Matterport equipment — most spaces within hours." },
+          { "@type": "HowToStep", "position": 3, "name": "Process", "text": "Raw scans are processed into a navigable 3D model with floorplans, measurements and highlight points." },
+          { "@type": "HowToStep", "position": 4, "name": "Deliver", "text": "Receive a shareable link embeddable on any website, Google Maps or social platform — live within days." }
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://pixiecube.space/" },
+          { "@type": "ListItem", "position": 2, "name": "Process", "item": "https://pixiecube.space/process.html" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet" />
+  <script>(function(){try{var t=localStorage.getItem('pixie-theme');if(!t){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    /* timeline */
+    .process { background: var(--navy-mid); }
+    .process-track {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .process-track::before {
+      content: '';
+      position: absolute;
+      top: 7px; left: 36px; right: 36px;
+      height: 1px;
+      background: linear-gradient(to right, var(--amber), rgba(234,92,31,0.15));
+    }
+    .process-step { padding: 0 1.5rem 0 0; position: relative; }
+    .step-dot {
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--amber);
+      border: 3px solid var(--navy-mid);
+      box-shadow: 0 0 0 1px var(--amber);
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 2;
+    }
+    .step-dot::after {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      background: var(--amber-glow);
+      animation: dotPulse 3s ease-in-out infinite;
+    }
+    @keyframes dotPulse {
+      0%, 100% { transform: scale(1); opacity: 0.6; }
+      50%       { transform: scale(1.5); opacity: 0; }
+    }
+    .process-step:nth-child(2) .step-dot::after { animation-delay: 0.75s; }
+    .process-step:nth-child(3) .step-dot::after { animation-delay: 1.5s; }
+    .process-step:nth-child(4) .step-dot::after { animation-delay: 2.25s; }
+    .step-phase {
+      font-family: var(--ff-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 0.5rem;
+    }
+    .step-name {
+      font-family: var(--ff-display);
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.75rem;
+    }
+    .step-desc { font-size: 0.88rem; color: var(--mist); line-height: 1.65; }
+
+    /* preparation checklist */
+    .prep { background: var(--navy); }
+    .prep-intro {
+      max-width: 640px;
+      color: var(--mist);
+      font-size: 0.98rem;
+      line-height: 1.8;
+      margin-bottom: 3.5rem;
+    }
+    .prep-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5px;
+    }
+    .prep-card {
+      background: var(--navy-card);
+      padding: 2.2rem 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+    }
+    .prep-card:hover { background: var(--navy-edge); }
+    .prep-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 2px; height: 0;
+      background: var(--amber);
+      transition: height 0.4s var(--ease-out-expo);
+    }
+    .prep-card:hover::after { height: 100%; }
+    .prep-card-title {
+      font-family: var(--ff-display);
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6em;
+    }
+    .prep-card-title .glyph { font-size: 1.1rem; }
+    .prep-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+    .prep-list li {
+      font-size: 0.88rem;
+      color: var(--mist);
+      line-height: 1.55;
+      padding-left: 1.4em;
+      position: relative;
+    }
+    .prep-list li::before {
+      content: '◆';
+      position: absolute;
+      left: 0;
+      top: 0.15em;
+      color: var(--amber);
+      font-size: 0.55rem;
+    }
+
+    /* scan-day facts */
+    .facts { background: var(--navy-mid); }
+    .facts-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+    }
+    .fact {
+      border-left: 2px solid var(--amber);
+      padding-left: 1.2rem;
+      transition: transform 0.3s var(--ease-out-expo);
+    }
+    .fact:hover { transform: translateX(4px); }
+    .fact-num {
+      font-family: var(--ff-display);
+      font-size: 2.4rem;
+      font-weight: 600;
+      color: var(--amber);
+      line-height: 1;
+    }
+    .fact-label { font-size: 0.85rem; color: var(--mist); margin-top: 0.4rem; }
+
+    @media (max-width: 900px) {
+      .process-track { grid-template-columns: 1fr 1fr; row-gap: 3rem; }
+      .process-track::before { display: none; }
+    }
+    @media (max-width: 600px) {
+      .process-track { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav aria-label="Main navigation">
+    <a href="index.html" class="logo">PIXIE<sup>3</sup></a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu">Menu</button>
+    <ul class="nav-links" id="nav-menu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="works.html">Our Works</a></li>
+      <li><a href="process.html" class="active">Process</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="theme-toggle" aria-label="Switch theme">☾</button>
+    <a href="contact.html" class="nav-cta">Get a Quote</a>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <header class="page-hero">
+    <p class="eyebrow">How it works</p>
+    <h1>From a single scan — to a world your clients can <em>walk through.</em></h1>
+    <p class="lede">Four phases, zero hassle on your side. Here's exactly what happens from first message to final delivery — and how to get your space camera-ready for a Matterport 3D scan.</p>
+  </header>
+
+  <!-- TIMELINE -->
+  <section class="process" aria-labelledby="process-heading">
+    <div class="section-inner">
+      <h2 class="display-title reveal" style="font-size: clamp(1.8rem, 3.5vw, 2.8rem); margin-bottom: 4rem;" id="process-heading">The four phases</h2>
+      <div class="process-track">
+
+        <div class="process-step reveal">
+          <div class="step-dot" aria-hidden="true"></div>
+          <div class="step-phase">Phase 01</div>
+          <div class="step-name">Consult</div>
+          <p class="step-desc">We discuss your space, goals and audience. No jargon — just a quick WhatsApp or call to understand what you need and quote you a fixed price.</p>
+        </div>
+
+        <div class="process-step reveal">
+          <div class="step-dot" aria-hidden="true"></div>
+          <div class="step-phase">Phase 02</div>
+          <div class="step-name">Scan</div>
+          <p class="step-desc">Our team arrives with Matterport equipment. The scan is fast and non-intrusive — most spaces are captured within hours, working around your operations.</p>
+        </div>
+
+        <div class="process-step reveal">
+          <div class="step-dot" aria-hidden="true"></div>
+          <div class="step-phase">Phase 03</div>
+          <div class="step-name">Process</div>
+          <p class="step-desc">Raw scans are processed into a fully navigable 3D model — including floorplans, measurements, labels and highlight points for your key features.</p>
+        </div>
+
+        <div class="process-step reveal">
+          <div class="step-dot" aria-hidden="true"></div>
+          <div class="step-phase">Phase 04</div>
+          <div class="step-name">Deliver</div>
+          <p class="step-desc">You receive a shareable link embeddable on any website, Google Maps or social platform — live within days, hosted and maintained for you.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PRE-SCAN PREPARATION -->
+  <section class="prep" aria-labelledby="prep-heading">
+    <div class="section-inner">
+      <p class="eyebrow reveal">Before we arrive</p>
+      <h2 class="display-title reveal" style="font-size: clamp(1.8rem, 3.5vw, 3rem); margin-bottom: 1.5rem;" id="prep-heading">Preparing your space for <em>scan day.</em></h2>
+      <p class="prep-intro reveal">
+        The camera captures everything, exactly as it is — every angle, every corner, permanently. A well-prepared space is the difference between a good tour and a stunning one. Here's our preparation guide; we'll also walk you through it personally before every shoot.
+      </p>
+
+      <div class="prep-grid">
+
+        <div class="prep-card reveal">
+          <div class="prep-card-title"><span class="glyph" aria-hidden="true">🧹</span>Presentation</div>
+          <ul class="prep-list">
+            <li>Deep-clean all areas being scanned — floors, glass and mirrors show everything in 4K</li>
+            <li>Style each room the way you'd want a VIP guest to see it</li>
+            <li>Remove clutter: cables, boxes, cleaning equipment, personal items</li>
+            <li>Straighten furniture, cushions, linens and table settings</li>
+            <li>Fresh flowers or styled amenities elevate hospitality scans noticeably</li>
+          </ul>
+        </div>
+
+        <div class="prep-card reveal">
+          <div class="prep-card-title"><span class="glyph" aria-hidden="true">💡</span>Lighting</div>
+          <ul class="prep-list">
+            <li>Switch on every light — including lamps, accent and cove lighting</li>
+            <li>Replace any blown or flickering bulbs before scan day</li>
+            <li>Open curtains and blinds unless the space is designed for mood lighting</li>
+            <li>Consistent lighting across rooms keeps the tour feeling seamless</li>
+          </ul>
+        </div>
+
+        <div class="prep-card reveal">
+          <div class="prep-card-title"><span class="glyph" aria-hidden="true">🚪</span>Access &amp; flow</div>
+          <ul class="prep-list">
+            <li>Open all interior doors you want connected in the tour</li>
+            <li>Close doors to areas you want excluded — storage, back-of-house, staff areas</li>
+            <li>Clear walkways so the camera can move through every path naturally</li>
+            <li>Confirm lift and access arrangements for multi-floor properties</li>
+          </ul>
+        </div>
+
+        <div class="prep-card reveal">
+          <div class="prep-card-title"><span class="glyph" aria-hidden="true">🔒</span>Privacy &amp; people</div>
+          <ul class="prep-list">
+            <li>The space should be empty of people during scanning — anyone captured stays in the tour</li>
+            <li>Remove or cover confidential documents, screens and pricing displays</li>
+            <li>Schedule scans during off-peak hours or before opening — we're flexible</li>
+            <li>Inform staff in advance so scan day runs smoothly</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SCAN DAY FACTS -->
+  <section class="facts" aria-labelledby="facts-heading">
+    <div class="section-inner">
+      <p class="eyebrow reveal">What to expect</p>
+      <h2 class="display-title reveal" style="font-size: clamp(1.8rem, 3.5vw, 2.8rem); margin-bottom: 3rem;" id="facts-heading">Scan day, by the numbers</h2>
+      <div class="facts-row">
+        <div class="fact reveal">
+          <div class="fact-num">2–4h</div>
+          <div class="fact-label">Typical on-site time for most spaces</div>
+        </div>
+        <div class="fact reveal">
+          <div class="fact-num">4K+</div>
+          <div class="fact-label">Capture resolution, every angle</div>
+        </div>
+        <div class="fact reveal">
+          <div class="fact-num">48h</div>
+          <div class="fact-label">Average turnaround to live link</div>
+        </div>
+        <div class="fact reveal">
+          <div class="fact-num">0</div>
+          <div class="fact-label">Disruption — we work around your operations</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-band" aria-labelledby="cta-heading">
+    <div class="section-inner">
+      <h2 class="cta-title" id="cta-heading">Your space is <em>ready.</em> Are you?</h2>
+      <p class="cta-sub">Tell us about your property and we'll handle everything else — from scan day to the moment your tour goes live.</p>
+      <div class="cta-actions">
+        <a href="contact.html" class="btn-primary">Book a Scan →</a>
+        <a href="works.html" class="btn-ghost">See a Live Tour First</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">PIXIE<sup>3</sup></div>
+      <ul class="footer-links">
+        <li><a href="works.html">Our Works</a></li>
+        <li><a href="process.html">Process</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="hotel-virtual-tour.html">Hotel Tours</a></li>
+        <li><a href="event-venue-virtual-tour.html">Venue Tours</a></li>
+        <li><a href="retail-virtual-tour.html">Retail Tours</a></li>
+        <li><a href="office-virtual-tour.html">Office Tours</a></li>
+        <li><a href="https://instagram.com/pixiecube.space" target="_blank" rel="noopener">Instagram</a></li>
+      </ul>
+      <div class="footer-legal">
+        © 2026 PIXIE³. Malaysia.<br>
+        Powered by Matterport.
+      </div>
+    </div>
+  </footer>
+
+  <script src="site.js"></script>
+</body>
+</html>
