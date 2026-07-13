@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /v1.html
 
-Sitemap: https://pixiecube.space/sitemap.xml
+Sitemap: https://pixiecube.my/sitemap.xml
