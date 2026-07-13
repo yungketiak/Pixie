@@ -47,3 +47,29 @@ if ('IntersectionObserver' in window && reveals.length) {
 } else {
   reveals.forEach(el => el.classList.add('in'));
 }
+
+// 3D pointer tilt (fine pointers, motion allowed only)
+(function () {
+  var fine = window.matchMedia('(pointer: fine)').matches;
+  var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!fine || still) return;
+  document.querySelectorAll('[data-tilt]').forEach(function (el) {
+    var raf = null;
+    el.addEventListener('pointermove', function (e) {
+      if (raf) return;
+      raf = requestAnimationFrame(function () {
+        var r = el.getBoundingClientRect();
+        var x = (e.clientX - r.left) / r.width - 0.5;
+        var y = (e.clientY - r.top) / r.height - 0.5;
+        el.style.transform =
+          'perspective(900px) rotateX(' + (-y * 6).toFixed(2) + 'deg)' +
+          ' rotateY(' + (x * 8).toFixed(2) + 'deg) translateZ(8px)';
+        raf = null;
+      });
+    });
+    el.addEventListener('pointerleave', function () {
+      if (raf) { cancelAnimationFrame(raf); raf = null; }
+      el.style.transform = '';
+    });
+  });
+})();

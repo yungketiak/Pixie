@@ -17,7 +17,7 @@
   --mist:      #4F5D75;   /* secondary text */
   --white:     #212431;   /* headings (dark on light) */
 
-  --ff-display: 'Cormorant Garamond', Georgia, serif;
+  --ff-display: 'Space Grotesk', 'Outfit', sans-serif;
   --ff-mono:    'DM Mono', 'Courier New', monospace;
   --ff-body:    'Outfit', sans-serif;
   --ff-pixel:   'Silkscreen', monospace;
@@ -234,8 +234,9 @@ section { position: relative; }
   font-weight: 300;
   line-height: 1.12;
 }
-.display-title em { font-style: italic; color: var(--amber); }
-.display-title strong { font-weight: 600; font-style: italic; color: var(--amber); }
+/* Space Grotesk has no italics: emphasis = color + weight, not faux-italic */
+.display-title em { font-style: normal; color: var(--amber); }
+.display-title strong { font-weight: 600; font-style: normal; color: var(--amber); }
 
 /* scroll-reveal */
 .reveal {
@@ -265,13 +266,14 @@ section { position: relative; }
 }
 .page-hero h1 {
   font-family: var(--ff-display);
-  font-size: clamp(2.8rem, 6.5vw, 5.5rem);
-  font-weight: 300;
+  font-size: clamp(2.4rem, 5.5vw, 4.5rem);
+  font-weight: 500;
   line-height: 1.05;
-  max-width: 16ch;
+  letter-spacing: -0.02em;
+  max-width: 18ch;
   animation: fadeUp 0.9s 0.15s var(--ease-out-expo) both;
 }
-.page-hero h1 em { font-style: italic; color: var(--amber); }
+.page-hero h1 em { font-style: normal; color: var(--amber); }
 .page-hero .lede {
   margin-top: 1.8rem;
   max-width: 560px;
@@ -482,13 +484,14 @@ section { position: relative; }
 }
 .cta-title {
   font-family: var(--ff-display);
-  font-size: clamp(2.4rem, 5.5vw, 5rem);
-  font-weight: 300;
-  line-height: 1.1;
+  font-size: clamp(2.2rem, 5vw, 4.2rem);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
   max-width: 18ch;
   margin-bottom: 1rem;
 }
-.cta-title em { font-style: italic; color: var(--amber); }
+.cta-title em { font-style: normal; color: var(--amber); }
 .cta-sub {
   color: var(--mist);
   font-size: 1rem;
@@ -580,4 +583,56 @@ footer {
   }
   html[data-theme="dark"] .nav-links li { border-bottom: 1px solid rgba(255,255,255,0.05); }
   .theme-toggle { margin-left: 0.6rem; }
+}
+
+
+/* ── 3D SYSTEM: tilt, depth reveal, hero cube ────────────────── */
+[data-tilt] {
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 0.4s var(--ease-out-expo);
+}
+[data-tilt] > * { transform: translateZ(1px); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    transform: translateY(28px) perspective(900px) rotateX(7deg);
+    transform-origin: center bottom;
+  }
+  .reveal.in { transform: translateY(0) perspective(900px) rotateX(0deg); }
+}
+
+/* hero 3D wireframe cube */
+.cube3d-wrap {
+  display: inline-block;
+  width: 16px; height: 16px;
+  margin-right: 0.75em;
+  vertical-align: -3px;
+  perspective: 120px;
+}
+.cube3d {
+  display: block;
+  position: relative;
+  width: 100%; height: 100%;
+  transform-style: preserve-3d;
+  animation: spin3d 9s linear infinite;
+}
+.cube3d i {
+  position: absolute;
+  inset: 0;
+  background: rgba(234,92,31,0.28);
+  border: 1px solid var(--amber);
+}
+.cube3d i:nth-child(1) { transform: translateZ(8px); }
+.cube3d i:nth-child(2) { transform: rotateY(180deg) translateZ(8px); }
+.cube3d i:nth-child(3) { transform: rotateY(90deg) translateZ(8px); }
+.cube3d i:nth-child(4) { transform: rotateY(-90deg) translateZ(8px); }
+.cube3d i:nth-child(5) { transform: rotateX(90deg) translateZ(8px); }
+.cube3d i:nth-child(6) { transform: rotateX(-90deg) translateZ(8px); }
+@keyframes spin3d {
+  from { transform: rotateX(-22deg) rotateY(0deg); }
+  to   { transform: rotateX(-22deg) rotateY(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cube3d { animation: none; transform: rotateX(-22deg) rotateY(35deg); }
 }

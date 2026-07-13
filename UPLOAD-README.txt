@@ -3,7 +3,7 @@ PIXIE³ — UPLOAD GUIDE (12 Jul 2026)
 Drag ALL these files into github.com/yungketiak/Pixie/upload/main
 (overwrite existing when asked), then commit:
 
-  UPDATED:  index.html, works.html, process.html, contact.html, styles.css
+  UPDATED:  ALL html pages + styles.css + site.js (full redesign pass)
   NEW:      faq.html, hotel-virtual-tour.html, event-venue-virtual-tour.html,
             retail-virtual-tour.html, office-virtual-tour.html
   NEW:      sitemap.xml, robots.txt

@@ -3,13 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Our Works — Live Matterport 3D Virtual Tours in Malaysia | PIXIE³</title>
-  <meta name="description" content="Explore live Matterport 3D virtual tours captured by PIXIE³ across Malaysia. Walk through a real Kuala Lumpur hotel suite in 360° — right in your browser." />
-  <meta property="og:title" content="Our Works — Live 3D Virtual Tours | PIXIE³" />
+  <title>Our Works | Live 3D Virtual Tours Malaysia | PIXIE³</title>
+  <meta name="description" content="Explore live Matterport 3D virtual tours captured by PIXIE³ across Malaysia. Walk through a real Kuala Lumpur hotel suite in 360°, right in your browser." />
+  <meta property="og:title" content="Our Works | Live 3D Virtual Tours | PIXIE³" />
   <meta property="og:description" content="Explore live 3D virtual tours captured by PIXIE³. Walk through real spaces right in your browser." />
   <meta property="og:url" content="https://pixiecube.space/works.html" />
   <meta property="og:image" content="https://pixiecube.space/assets/dollhouse.jpg" />
   <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="PIXIE³" />
+  <meta property="og:locale" content="en_MY" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="canonical" href="https://pixiecube.space/works.html" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23212431'/%3E%3Crect x='22' y='22' width='56' height='56' fill='%23EA5C1F'/%3E%3C/svg%3E" />
@@ -44,7 +46,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet" />
   <script>(function(){try{var t=localStorage.getItem('pixie-theme');if(!t){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
   <link rel="stylesheet" href="styles.css" />
 
@@ -122,9 +124,11 @@
       aspect-ratio: 4/3;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.75rem;
+      align-items: flex-start;
+      justify-content: flex-end;
+      padding: 2rem;
+      gap: 0.4rem;
+      color: inherit;
       position: relative;
       overflow: hidden;
       transition: background 0.3s;
@@ -136,7 +140,20 @@
       inset: 0;
       background: linear-gradient(135deg, rgba(234,92,31,0.04) 0%, transparent 70%);
     }
-    .coming-icon { font-size: 2rem; opacity: 0.25; }
+    .coming-name {
+      font-family: var(--ff-display);
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+    .coming-go {
+      font-family: var(--ff-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-top: 0.4rem;
+    }
     .coming-label {
       font-family: var(--ff-mono);
       font-size: 0.6rem;
@@ -183,15 +200,14 @@
   <header class="page-hero">
     <p class="eyebrow">Our works</p>
     <h1>Real spaces. <em>Virtually</em> everywhere.</h1>
-    <p class="lede">Don't take our word for it — walk through a live Matterport 3D virtual tour yourself. Every tour below is live, interactive and captured by our team in Malaysia.</p>
+    <p class="lede">Don't take our word for it. Walk through a live Matterport 3D virtual tour yourself. Every tour below is live, interactive and captured by our team in Malaysia.</p>
   </header>
 
   <!-- FEATURED LIVE TOUR -->
   <section class="featured" aria-labelledby="featured-heading">
     <div class="section-inner">
       <div class="featured-meta reveal">
-        <h2 class="featured-name" id="featured-heading">Featured Tour — Hotel Suite, Kuala Lumpur</h2>
-        <span class="featured-tag">Live · Interactive</span>
+        <h2 class="featured-name" id="featured-heading">Featured Tour: Hotel Suite, Kuala Lumpur</h2>
       </div>
       <div class="tour-embed reveal">
         <iframe
@@ -199,7 +215,7 @@
           allow="autoplay; fullscreen; web-share; xr-spatial-tracking;"
           allowfullscreen
           loading="lazy"
-          title="PIXIE³ Matterport 3D virtual tour — hotel suite, Kuala Lumpur">
+          title="PIXIE³ Matterport 3D virtual tour, hotel suite, Kuala Lumpur">
         </iframe>
       </div>
       <div class="tour-hint" aria-hidden="true">
@@ -213,26 +229,23 @@
   <!-- STILLS FROM THE SCAN -->
   <section class="stills" aria-labelledby="stills-heading">
     <div class="section-inner">
-      <p class="eyebrow reveal">From this capture</p>
       <h2 class="display-title reveal" style="font-size: clamp(1.8rem, 3.5vw, 3rem); margin-bottom: 3rem;" id="stills-heading">One scan. <em>Many angles.</em></h2>
       <div class="stills-grid">
         <div class="reveal">
-          <div class="frame">
+          <div class="frame" data-tilt>
             <span class="corner tl" aria-hidden="true"></span>
-            <img src="assets/room-scan.jpg" alt="4K interior still from a Matterport virtual tour — Kuala Lumpur hotel room with KLCC skyline" loading="lazy" />
+            <img src="assets/room-scan.jpg" alt="4K interior still from a Matterport virtual tour, Kuala Lumpur hotel room with KLCC skyline" loading="lazy" />
             <span class="corner br" aria-hidden="true"></span>
-            <span class="badge">4K still</span>
           </div>
-          <p class="still-caption">High-resolution stills — extracted straight from the tour for your website &amp; socials</p>
+          <p class="still-caption">High-resolution stills, extracted straight from the tour for your website &amp; socials</p>
         </div>
         <div class="reveal">
-          <div class="frame">
+          <div class="frame" data-tilt>
             <span class="corner tl" aria-hidden="true"></span>
             <img src="assets/dollhouse.jpg" alt="Dollhouse cutaway 3D model of the scanned hotel suite in Kuala Lumpur" loading="lazy" />
             <span class="corner br" aria-hidden="true"></span>
-            <span class="badge">Dollhouse</span>
           </div>
-          <p class="still-caption">The dollhouse view — your whole space as an explorable 3D model</p>
+          <p class="still-caption">The dollhouse view: your whole space as an explorable 3D model</p>
         </div>
       </div>
     </div>
@@ -241,24 +254,23 @@
   <!-- MORE COMING -->
   <section class="coming" aria-labelledby="coming-heading">
     <div class="section-inner">
-      <p class="eyebrow reveal">Growing portfolio</p>
       <h2 class="display-title reveal" style="font-size: clamp(1.8rem, 3.5vw, 3rem); margin-bottom: 3rem;" id="coming-heading">More spaces, <em>coming soon.</em></h2>
-      <div class="coming-grid">
-        <div class="coming-cell reveal">
-          <span class="coming-icon" aria-hidden="true">⬡</span>
+            <div class="coming-grid">
+        <a class="coming-cell reveal" data-tilt href="event-venue-virtual-tour.html">
           <span class="coming-label">Next capture</span>
-          <span class="coming-badge">Event Venue</span>
-        </div>
-        <div class="coming-cell reveal">
-          <span class="coming-icon" aria-hidden="true">⬡</span>
+          <span class="coming-name">Event venue</span>
+          <span class="coming-go">Venue virtual tours →</span>
+        </a>
+        <a class="coming-cell reveal" data-tilt href="retail-virtual-tour.html">
           <span class="coming-label">Next capture</span>
-          <span class="coming-badge">Retail &amp; F&amp;B</span>
-        </div>
-        <div class="coming-cell reveal">
-          <span class="coming-icon" aria-hidden="true">⬡</span>
+          <span class="coming-name">Retail &amp; F&amp;B</span>
+          <span class="coming-go">Retail virtual tours →</span>
+        </a>
+        <a class="coming-cell reveal" data-tilt href="construction-virtual-tour.html">
           <span class="coming-label">Next capture</span>
-          <span class="coming-badge">Corporate</span>
-        </div>
+          <span class="coming-name">Construction site</span>
+          <span class="coming-go">Construction tours →</span>
+        </a>
       </div>
     </div>
   </section>
@@ -269,8 +281,8 @@
       <h2 class="cta-title" id="cta-heading">Want your space <em>featured here?</em></h2>
       <p class="cta-sub">Every project starts with a conversation. Tell us about your space and we'll tell you exactly what it takes.</p>
       <div class="cta-actions">
-        <a href="contact.html" class="btn-primary">Get a Quote →</a>
-        <a href="process.html" class="btn-ghost">How It Works</a>
+        <a href="contact.html" class="btn-primary">Get a quote</a>
+        <a href="process.html" class="btn-ghost">See the process</a>
       </div>
     </div>
   </section>
@@ -287,11 +299,12 @@
         <li><a href="event-venue-virtual-tour.html">Venue Tours</a></li>
         <li><a href="retail-virtual-tour.html">Retail Tours</a></li>
         <li><a href="office-virtual-tour.html">Office Tours</a></li>
+        <li><a href="construction-virtual-tour.html">Construction Tours</a></li>
         <li><a href="https://instagram.com/pixiecube.space" target="_blank" rel="noopener">Instagram</a></li>
       </ul>
       <div class="footer-legal">
-        © 2026 PIXIE³. Malaysia.<br>
-        Powered by Matterport.
+        Matterport 3D virtual tours, 360° walkthroughs &amp; digital twins across Malaysia.<br>
+        © 2026 PIXIE³ · Powered by Matterport.
       </div>
     </div>
   </footer>
